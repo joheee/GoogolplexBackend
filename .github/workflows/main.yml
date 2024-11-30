@@ -51,8 +51,9 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /project/googolplex/googolplex-backend-server
-            docker rm ecos_backend -f
-            docker rmi johedotcom/ecos-backend-repository -f
+            docker rm googolplex_backend -f
+            docker rmi johedotcom/googolplex-backend-repository -f
             docker compose -f docker-compose-server.yaml down
             docker compose -f docker-compose-server.yaml pull
             docker compose -f docker-compose-server.yml up -d
+            
