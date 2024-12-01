@@ -8,16 +8,26 @@ import {
   Delete,
   HttpStatus,
   NotFoundException,
+  UseGuards,
 } from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CustomResponse } from 'src/tools/CustomResponse';
 import { AuthService } from '../auth/auth.service';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
 @ApiTags('notification')
 @Controller('notification')
+@ApiBearerAuth('access-token')
+@UseGuards(JwtAuthGuard)
 export class NotificationController {
   constructor(
     private readonly notificationService: NotificationService,

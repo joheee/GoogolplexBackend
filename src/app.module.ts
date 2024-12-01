@@ -4,7 +4,5 @@ import { NotificationModule } from './api/notification/notification.module';
 
 @Module({
   imports: [AuthModule, NotificationModule],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
