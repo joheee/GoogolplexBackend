@@ -13,11 +13,34 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model user {
-  id    String @id @default(uuid())
-  email String @unique
-  password String
-  name String
-  picture String @default("https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png")
-  isVerified Boolean @default(false)
+model User {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  password   String
+  name       String
+  picture    String   @default("https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png")
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  notifications Notification[]
+}
+
+model Notification {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+
+  User    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
+}
+
+model Class {
+  id          String   @id @default(uuid())
+  class_code  String   @unique
+  subject     String
+  description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }
