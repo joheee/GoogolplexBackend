@@ -16,7 +16,7 @@ datasource db {
 model User {
   id         String   @id @default(uuid())
   email      String   @unique
-  password   String
+  password   String?
   name       String
   picture    String   @default("https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-256x256-q0fen40c.png")
   created_at DateTime @default(now())
