@@ -8,6 +8,17 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Googolplex Backend Documentation')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        description: `Paste the JWT Token here!!`,
+        name: 'Authorization',
+        bearerFormat: 'Bearer',
+        scheme: 'Bearer',
+        type: 'http',
+        in: 'Header',
+      },
+      'access-token',
+    )
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/docs', app, documentFactory);

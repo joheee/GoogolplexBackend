@@ -65,9 +65,6 @@ export class AuthController {
   @ApiOperation({ summary: 'get all users' })
   async findAll() {
     const users = await this.authService.findAll();
-    if (users.length === 0) {
-      throw new NotFoundException(`user is empty!`);
-    }
     return new CustomResponse(
       HttpStatus.OK,
       `list of users retrieved successfully!`,
