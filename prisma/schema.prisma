@@ -33,8 +33,8 @@ model Notification {
   updated_at  DateTime @updatedAt
   is_read Boolean @default(false)
 
-  User    User?   @relation(fields: [user_id], references: [id])
-  user_id String?
+  User    User   @relation(fields: [user_id], references: [id])
+  user_id String
 }
 
 model Class {

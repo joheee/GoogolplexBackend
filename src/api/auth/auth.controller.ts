@@ -79,7 +79,7 @@ export class AuthController {
     type: 'string',
     example: 'dont be lazy :)',
   })
-  @ApiOperation({ summary: 'get all users' })
+  @ApiOperation({ summary: 'find user by id' })
   async findById(@Param('id') id: string) {
     const findUser = await this.authService.findById(id);
     if (!findUser) {

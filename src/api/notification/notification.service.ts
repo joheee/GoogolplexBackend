@@ -7,7 +7,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class NotificationService {
   constructor(private prisma: PrismaService) {}
   async create(createNotificationDto: CreateNotificationDto) {
-    return 'This action adds a new notification';
+    return await this.prisma.notification.create({
+      data: createNotificationDto,
+      include: {
+        User: true,
+      },
+    });
   }
 
   async findAll() {
@@ -18,15 +23,31 @@ export class NotificationService {
     });
   }
 
-  async findOne(id: number) {
-    return `This action returns a #${id} notification`;
+  async findOne(id: string) {
+    return await this.prisma.notification.findFirst({
+      where: { id },
+      include: {
+        User: true,
+      },
+    });
   }
 
-  async update(id: number, updateNotificationDto: UpdateNotificationDto) {
-    return `This action updates a #${id} notification`;
+  async update(id: string, updateNotificationDto: UpdateNotificationDto) {
+    return await this.prisma.notification.update({
+      where: { id },
+      data: updateNotificationDto,
+      include: {
+        User: true,
+      },
+    });
   }
 
-  async remove(id: number) {
-    return `This action removes a #${id} notification`;
+  async remove(id: string) {
+    return await this.prisma.notification.delete({
+      where: { id },
+      include: {
+        User: true,
+      },
+    });
   }
 }

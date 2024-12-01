@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateNotificationDto {
   @ApiProperty({ example: 'dont be lazy :)', description: 'id of user' })
@@ -20,8 +20,8 @@ export class CreateNotificationDto {
   @IsString()
   description: string;
 
-  @ApiProperty({ example: false, description: 'read status' })
+  @ApiProperty({ example: false, description: 'read status', type: Boolean })
   @IsNotEmpty()
-  @IsString()
-  is_read: string;
+  @IsBoolean()
+  is_read: boolean;
 }
