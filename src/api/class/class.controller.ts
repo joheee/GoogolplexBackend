@@ -22,60 +22,62 @@ import {
 } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
-@Controller('class')
-@ApiTags('class')
+const TABLE_NAME = 'class';
+
+@ApiTags(TABLE_NAME)
+@Controller(TABLE_NAME)
 @ApiBearerAuth('access-token')
 @UseGuards(JwtAuthGuard)
 export class ClassController {
   constructor(private readonly classService: ClassService) {}
 
   @Post()
-  @ApiOperation({ summary: 'create class' })
+  @ApiOperation({ summary: `create ${TABLE_NAME}` })
   async create(@Body() createClassDto: CreateClassDto) {
     const newClass = await this.classService.create(createClassDto);
     return new CustomResponse(
       HttpStatus.OK,
-      `class with subject ${newClass.subject} is successfully created!`,
+      `${TABLE_NAME} with subject ${newClass.subject} is successfully created!`,
       newClass,
     );
   }
 
   @Get()
-  @ApiOperation({ summary: 'get all classes' })
+  @ApiOperation({ summary: `get all ${TABLE_NAME}` })
   async findAll() {
     const classes = await this.classService.findAll();
     return new CustomResponse(
       HttpStatus.OK,
-      `list of classes retrieved successfully!`,
+      `list of ${TABLE_NAME} retrieved successfully!`,
       classes,
     );
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'find class by id' })
+  @ApiOperation({ summary: `find ${TABLE_NAME} by id` })
   @ApiParam({
     name: 'id',
-    description: 'id class',
+    description: `id ${TABLE_NAME}`,
     type: 'string',
     example: 'dont be lazy :)',
   })
   async findOne(@Param('id') id: string) {
     const findClass = await this.classService.findOne(id);
     if (!findClass) {
-      throw new NotFoundException(`class with id ${id} is not found!`);
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
     }
     return new CustomResponse(
       HttpStatus.OK,
-      `found class with title ${findClass.subject}!`,
+      `found ${TABLE_NAME} with title ${findClass.subject}!`,
       findClass,
     );
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'update class by id' })
+  @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
   @ApiParam({
     name: 'id',
-    description: 'id class',
+    description: `id ${TABLE_NAME}`,
     type: 'string',
     example: 'dont be lazy :)',
   })
@@ -85,33 +87,33 @@ export class ClassController {
   ) {
     const findClass = await this.classService.findOne(id);
     if (!findClass) {
-      throw new NotFoundException(`class with id ${id} is not found!`);
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
     }
     const updateClass = await this.classService.update(id, updateClassDto);
     return new CustomResponse(
       HttpStatus.OK,
-      'class is successfully updated!',
+      `${TABLE_NAME} is successfully updated!`,
       updateClass,
     );
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'delete class by id' })
+  @ApiOperation({ summary: `delete ${TABLE_NAME} by id` })
   @ApiParam({
     name: 'id',
-    description: 'id class',
+    description: `id ${TABLE_NAME}`,
     type: 'string',
     example: 'dont be lazy :)',
   })
   async remove(@Param('id') id: string) {
     const findClass = await this.classService.findOne(id);
     if (!findClass) {
-      throw new NotFoundException(`class with id ${id} is not found!`);
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
     }
     const deleteClass = await this.classService.remove(id);
     return new CustomResponse(
       HttpStatus.OK,
-      'class is successfully deleted!',
+      `${TABLE_NAME} is successfully deleted!`,
       deleteClass,
     );
   }

@@ -24,8 +24,10 @@ import { CustomResponse } from 'src/tools/CustomResponse';
 import { AuthService } from '../auth/auth.service';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
-@ApiTags('notification')
-@Controller('notification')
+const TABLE_NAME = 'notification';
+
+@ApiTags(TABLE_NAME)
+@Controller(TABLE_NAME)
 @ApiBearerAuth('access-token')
 @UseGuards(JwtAuthGuard)
 export class NotificationController {
@@ -35,7 +37,7 @@ export class NotificationController {
   ) {}
 
   @Post()
-  @ApiOperation({ summary: 'create notification' })
+  @ApiOperation({ summary: `create ${TABLE_NAME}` })
   @ApiBody({
     type: CreateNotificationDto,
   })
@@ -51,47 +53,47 @@ export class NotificationController {
     );
     return new CustomResponse(
       HttpStatus.OK,
-      'notif successfully created!',
+      `${TABLE_NAME} successfully created!`,
       newNotif,
     );
   }
 
   @Get()
-  @ApiOperation({ summary: 'get all notifications' })
+  @ApiOperation({ summary: `get all ${TABLE_NAME}` })
   async findAll() {
     const notifications = await this.notificationService.findAll();
     return new CustomResponse(
       HttpStatus.OK,
-      `list of notifications retrieved successfully!`,
+      `list of ${TABLE_NAME} retrieved successfully!`,
       notifications,
     );
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'find notification by id' })
+  @ApiOperation({ summary: `find ${TABLE_NAME} by id` })
   @ApiParam({
     name: 'id',
-    description: 'id notification',
+    description: `id ${TABLE_NAME}`,
     type: 'string',
     example: 'dont be lazy :)',
   })
   async findOne(@Param('id') id: string) {
     const findNotif = await this.notificationService.findOne(id);
     if (!findNotif) {
-      throw new NotFoundException(`notif with id ${id} is not found!`);
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
     }
     return new CustomResponse(
       HttpStatus.OK,
-      `found notif with title ${findNotif.title}!`,
+      `found ${TABLE_NAME} with title ${findNotif.title}!`,
       findNotif,
     );
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'update notification by id' })
+  @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
   @ApiParam({
     name: 'id',
-    description: 'id notification',
+    description: `id ${TABLE_NAME}`,
     type: 'string',
     example: 'dont be lazy :)',
   })
@@ -101,7 +103,7 @@ export class NotificationController {
   ) {
     const findNotif = await this.notificationService.findOne(id);
     if (!findNotif) {
-      throw new NotFoundException(`notif with id ${id} is not found!`);
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
     }
 
     if (updateNotificationDto.user_id) {
@@ -121,28 +123,28 @@ export class NotificationController {
     );
     return new CustomResponse(
       HttpStatus.OK,
-      'notif is successfully updated!',
+      `${TABLE_NAME} is successfully updated!`,
       updateNotif,
     );
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'delete notification by id' })
+  @ApiOperation({ summary: `delete ${TABLE_NAME} by id` })
   @ApiParam({
     name: 'id',
-    description: 'id notification',
+    description: `id ${TABLE_NAME}`,
     type: 'string',
     example: 'dont be lazy :)',
   })
   async remove(@Param('id') id: string) {
     const findNotif = await this.notificationService.findOne(id);
     if (!findNotif) {
-      throw new NotFoundException(`notif with id ${id} is not found!`);
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
     }
     const deleteNotif = await this.notificationService.remove(id);
     return new CustomResponse(
       HttpStatus.OK,
-      'notif is successfully deleted!',
+      `${TABLE_NAME} is successfully deleted!`,
       deleteNotif,
     );
   }

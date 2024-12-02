@@ -10,7 +10,7 @@ export class NotificationService {
     return await this.prisma.notification.create({
       data: createNotificationDto,
       include: {
-        User: true,
+        user: true,
       },
     });
   }
@@ -18,7 +18,7 @@ export class NotificationService {
   async findAll() {
     return await this.prisma.notification.findMany({
       include: {
-        User: true,
+        user: true,
       },
     });
   }
@@ -27,7 +27,7 @@ export class NotificationService {
     return await this.prisma.notification.findFirst({
       where: { id },
       include: {
-        User: true,
+        user: true,
       },
     });
   }
@@ -37,7 +37,7 @@ export class NotificationService {
       where: { id },
       data: updateNotificationDto,
       include: {
-        User: true,
+        user: true,
       },
     });
   }
@@ -46,7 +46,7 @@ export class NotificationService {
     return await this.prisma.notification.delete({
       where: { id },
       include: {
-        User: true,
+        user: true,
       },
     });
   }
