@@ -22,6 +22,15 @@ export class UserClassMemberService {
     });
   }
 
+  async findByUserAndClass(user_id: string, class_id: string) {
+    return await this.prisma.userClassMember.findFirst({
+      where: {
+        user_id,
+        class_id,
+      },
+    });
+  }
+
   async update(id: string, updateUserClassMemberDto: UpdateUserClassMemberDto) {
     return await this.prisma.userClassMember.update({
       where: { id },

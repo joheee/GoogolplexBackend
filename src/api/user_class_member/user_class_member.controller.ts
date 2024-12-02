@@ -9,6 +9,7 @@ import {
   NotFoundException,
   HttpStatus,
   UseGuards,
+  MethodNotAllowedException,
 } from '@nestjs/common';
 import { UserClassMemberService } from './user_class_member.service';
 import { CreateUserClassMemberDto } from './dto/create-user_class_member.dto';
@@ -52,12 +53,24 @@ export class UserClassMemberController {
         `user with id ${createUserClassMemberDto.user_id} is not found!`,
       );
     }
+
     const findClass = await this.classService.findOne(
       createUserClassMemberDto.class_id,
     );
     if (!findClass) {
       throw new NotFoundException(
         `class with id ${createUserClassMemberDto.class_id} is not found!`,
+      );
+    }
+
+    const findDuplicateUserClass =
+      await this.userClassMemberService.findByUserAndClass(
+        createUserClassMemberDto.user_id,
+        createUserClassMemberDto.class_id,
+      );
+    if (findDuplicateUserClass) {
+      throw new MethodNotAllowedException(
+        `user ${findUser.name} already join class ${findClass.subject}!`,
       );
     }
 
