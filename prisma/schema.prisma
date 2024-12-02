@@ -22,6 +22,7 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  user_post_comment UserPostComment[]
   notifications     Notification[]
   user_class_member UserClassMember[]
 }
@@ -81,10 +82,22 @@ model Post {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  article       Article     @relation(fields: [article_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  assignment    Assignment? @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  class         Class       @relation(fields: [class_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  article_id    String      @unique
-  assignment_id String?     @unique
-  class_id      String
+  user_post_comment UserPostComment[]
+  article           Article           @relation(fields: [article_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  assignment        Assignment?       @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  class             Class             @relation(fields: [class_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  article_id        String            @unique
+  assignment_id     String?           @unique
+  class_id          String
+}
+
+model UserPostComment {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  comment    String
+  User       User?    @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id     String?
+  Post       Post?    @relation(fields: [post_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  post_id     String?
 }
