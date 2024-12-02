@@ -65,7 +65,7 @@ model Article {
   id      String @id @default(uuid())
   title   String
   content String
-  Post    Post[]
+  Post    Post?
 }
 
 model Assignment {
@@ -73,7 +73,7 @@ model Assignment {
   title    String
   content  String
   due_date DateTime
-  Post     Post[]
+  Post     Post?
 }
 
 model Post {
@@ -83,8 +83,8 @@ model Post {
 
   article       Article     @relation(fields: [article_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   assignment    Assignment? @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  class         Class?      @relation(fields: [class_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  article_id    String
-  assignment_id String?
-  class_id       String?
+  class         Class       @relation(fields: [class_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  article_id    String      @unique
+  assignment_id String?     @unique
+  class_id      String
 }
