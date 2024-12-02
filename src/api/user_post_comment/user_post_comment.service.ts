@@ -6,23 +6,32 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class UserPostCommentService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createUserPostCommentDto: CreateUserPostCommentDto) {
-    return 'This action adds a new userPostComment';
+  async create(createUserPostCommentDto: CreateUserPostCommentDto) {
+    return await this.prisma.userPostComment.create({
+      data: createUserPostCommentDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all userPostComment`;
+  async findAll() {
+    return await this.prisma.userPostComment.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userPostComment`;
+  async findOne(id: string) {
+    return await this.prisma.userPostComment.findFirst({
+      where: { id },
+    });
   }
 
-  update(id: number, updateUserPostCommentDto: UpdateUserPostCommentDto) {
-    return `This action updates a #${id} userPostComment`;
+  async update(id: string, updateUserPostCommentDto: UpdateUserPostCommentDto) {
+    return await this.prisma.userPostComment.update({
+      where: { id },
+      data: updateUserPostCommentDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userPostComment`;
+  async remove(id: string) {
+    return await this.prisma.userPostComment.delete({
+      where: { id },
+    });
   }
 }

@@ -15,7 +15,6 @@ import { CreateNotificationDto } from './dto/create-notification.dto';
 import { UpdateNotificationDto } from './dto/update-notification.dto';
 import {
   ApiBearerAuth,
-  ApiBody,
   ApiOperation,
   ApiParam,
   ApiTags,
@@ -38,9 +37,6 @@ export class NotificationController {
 
   @Post()
   @ApiOperation({ summary: `create ${TABLE_NAME}` })
-  @ApiBody({
-    type: CreateNotificationDto,
-  })
   async create(@Body() createNotificationDto: CreateNotificationDto) {
     const user = await this.authService.findById(createNotificationDto.user_id);
     if (!user) {

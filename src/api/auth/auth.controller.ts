@@ -13,10 +13,9 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { LocalGuard } from './guards/local.guard';
-import { LoginAuthDto } from './dto/login-auth.dto';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { CustomResponse } from 'src/tools/CustomResponse';
@@ -29,9 +28,6 @@ export class AuthController {
   @Post()
   @UseGuards(LocalGuard)
   @ApiOperation({ summary: 'login user' })
-  @ApiBody({
-    type: LoginAuthDto,
-  })
   async login(@Req() req: Request) {
     return new CustomResponse(
       HttpStatus.OK,
@@ -42,9 +38,6 @@ export class AuthController {
 
   @Patch()
   @ApiOperation({ summary: 'register user' })
-  @ApiBody({
-    type: CreateAuthDto,
-  })
   async customer(@Body() createAuthDto: CreateAuthDto) {
     const { email } = createAuthDto;
     const emailCheckUser = await this.authService.findByEmail(email);

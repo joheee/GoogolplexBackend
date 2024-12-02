@@ -1,34 +1,170 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  HttpStatus,
+  NotFoundException,
+} from '@nestjs/common';
 import { UserPostCommentService } from './user_post_comment.service';
 import { CreateUserPostCommentDto } from './dto/create-user_post_comment.dto';
 import { UpdateUserPostCommentDto } from './dto/update-user_post_comment.dto';
+import { PostService } from '../post/post.service';
+import { AuthService } from '../auth/auth.service';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiTags,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { CustomResponse } from 'src/tools/CustomResponse';
 
-@Controller('user-post-comment')
+const TABLE_NAME = 'user_post_comment';
+
+@ApiTags(TABLE_NAME)
+@Controller(TABLE_NAME)
+@ApiBearerAuth('access-token')
+@UseGuards(JwtAuthGuard)
 export class UserPostCommentController {
-  constructor(private readonly userPostCommentService: UserPostCommentService) {}
+  constructor(
+    private readonly userPostCommentService: UserPostCommentService,
+    private readonly authService: AuthService,
+    private readonly postService: PostService,
+  ) {}
 
   @Post()
-  create(@Body() createUserPostCommentDto: CreateUserPostCommentDto) {
-    return this.userPostCommentService.create(createUserPostCommentDto);
+  @ApiOperation({ summary: `create ${TABLE_NAME}` })
+  async create(@Body() createUserPostCommentDto: CreateUserPostCommentDto) {
+    // USER VALIDATION
+    const findUser = await this.authService.findById(
+      createUserPostCommentDto.user_id,
+    );
+    if (!findUser) {
+      throw new NotFoundException(
+        `user with id ${createUserPostCommentDto.user_id} is not found!`,
+      );
+    }
+
+    // POST VALIDATION
+    const findPost = await this.postService.findOne(
+      createUserPostCommentDto.post_id,
+    );
+    if (!findPost) {
+      throw new NotFoundException(
+        `post with id ${createUserPostCommentDto.post_id} is not found!`,
+      );
+    }
+
+    const newUserPostComment = await this.userPostCommentService.create(
+      createUserPostCommentDto,
+    );
+    return new CustomResponse(
+      HttpStatus.OK,
+      `${TABLE_NAME} successfully created!`,
+      newUserPostComment,
+    );
   }
 
   @Get()
-  findAll() {
-    return this.userPostCommentService.findAll();
+  @ApiOperation({ summary: `get all ${TABLE_NAME}` })
+  async findAll() {
+    const userPostComment = await this.userPostCommentService.findAll();
+    return new CustomResponse(
+      HttpStatus.OK,
+      `list of ${TABLE_NAME} retrieved successfully!`,
+      userPostComment,
+    );
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userPostCommentService.findOne(+id);
+  @ApiOperation({ summary: `find ${TABLE_NAME} by id` })
+  @ApiParam({
+    name: 'id',
+    description: `id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findOne(@Param('id') id: string) {
+    const findUserPostComment = await this.userPostCommentService.findOne(id);
+    if (!findUserPostComment) {
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
+    }
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with id ${findUserPostComment.id}!`,
+      findUserPostComment,
+    );
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserPostCommentDto: UpdateUserPostCommentDto) {
-    return this.userPostCommentService.update(+id, updateUserPostCommentDto);
+  @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
+  @ApiParam({
+    name: 'id',
+    description: `id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async update(
+    @Param('id') id: string,
+    @Body() updateUserPostCommentDto: UpdateUserPostCommentDto,
+  ) {
+    // USER VALIDATION
+    if (updateUserPostCommentDto.user_id) {
+      const findUser = await this.authService.findById(
+        updateUserPostCommentDto.user_id,
+      );
+      if (!findUser) {
+        throw new NotFoundException(
+          `user with id ${updateUserPostCommentDto.user_id} is not found!`,
+        );
+      }
+    }
+
+    // POST VALIDATION
+    if (updateUserPostCommentDto.post_id) {
+      const findPost = await this.postService.findOne(
+        updateUserPostCommentDto.post_id,
+      );
+      if (!findPost) {
+        throw new NotFoundException(
+          `post with id ${updateUserPostCommentDto.post_id} is not found!`,
+        );
+      }
+    }
+    const updatePost = await this.userPostCommentService.update(
+      id,
+      updateUserPostCommentDto,
+    );
+    return new CustomResponse(
+      HttpStatus.OK,
+      `${TABLE_NAME} is successfully updated!`,
+      updatePost,
+    );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userPostCommentService.remove(+id);
+  @ApiOperation({ summary: `delete ${TABLE_NAME} by id` })
+  @ApiParam({
+    name: 'id',
+    description: `id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async remove(@Param('id') id: string) {
+    const findUserPostComment = await this.userPostCommentService.findOne(id);
+    if (!findUserPostComment) {
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
+    }
+    const deleteUserPostComment = await this.userPostCommentService.remove(id);
+    return new CustomResponse(
+      HttpStatus.OK,
+      `${TABLE_NAME} is successfully deleted!`,
+      deleteUserPostComment,
+    );
   }
 }

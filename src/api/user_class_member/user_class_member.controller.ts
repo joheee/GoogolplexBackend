@@ -16,7 +16,6 @@ import { CreateUserClassMemberDto } from './dto/create-user_class_member.dto';
 import { UpdateUserClassMemberDto } from './dto/update-user_class_member.dto';
 import {
   ApiBearerAuth,
-  ApiBody,
   ApiOperation,
   ApiParam,
   ApiTags,
@@ -41,9 +40,6 @@ export class UserClassMemberController {
 
   @Post()
   @ApiOperation({ summary: `create ${TABLE_NAME}` })
-  @ApiBody({
-    type: CreateUserClassMemberDto,
-  })
   async create(@Body() createUserClassMemberDto: CreateUserClassMemberDto) {
     const findUser = await this.authService.findById(
       createUserClassMemberDto.user_id,

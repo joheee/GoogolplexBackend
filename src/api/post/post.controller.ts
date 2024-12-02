@@ -15,7 +15,6 @@ import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import {
   ApiBearerAuth,
-  ApiBody,
   ApiOperation,
   ApiParam,
   ApiTags,
@@ -42,9 +41,6 @@ export class PostController {
 
   @Post()
   @ApiOperation({ summary: `create ${TABLE_NAME}` })
-  @ApiBody({
-    type: CreatePostDto,
-  })
   async create(@Body() createPostDto: CreatePostDto) {
     // CLASS VALIDATION
     const findClass = await this.classService.findOne(createPostDto.class_id);
