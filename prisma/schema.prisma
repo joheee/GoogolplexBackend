@@ -22,9 +22,10 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  user_post_comment UserPostComment[]
-  notifications     Notification[]
-  user_class_member UserClassMember[]
+  user_post_comment    UserPostComment[]
+  notifications        Notification[]
+  user_class_member    UserClassMember[]
+  user_assignment_todo UserAssignmentTodo[]
 }
 
 model Notification {
@@ -70,11 +71,12 @@ model Article {
 }
 
 model Assignment {
-  id       String   @id @default(uuid())
-  title    String
-  content  String
-  due_date DateTime
-  post     Post?
+  id                   String               @id @default(uuid())
+  title                String
+  content              String
+  due_date             DateTime
+  post                 Post?
+  user_assignment_todo UserAssignmentTodo[]
 }
 
 model Post {
@@ -96,8 +98,21 @@ model UserPostComment {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
   comment    String
-  user       User    @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  user_id     String
-  post       Post    @relation(fields: [post_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  post_id     String
+  user       User     @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id    String
+  post       Post     @relation(fields: [post_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  post_id    String
+}
+
+model UserAssignmentTodo {
+  id         String   @id @default(uuid())
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  score      Int      @default(0)
+  is_finish  Boolean  @default(false)
+
+  user         User       @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id       String
+  assignment   Assignment @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  assignment_id String
 }
