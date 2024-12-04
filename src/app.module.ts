@@ -8,6 +8,7 @@ import { AssignmentModule } from './api/assignment/assignment.module';
 import { UserPostCommentModule } from './api/user_post_comment/user_post_comment.module';
 import { PostModule } from './api/post/post.module';
 import { UserTodoAnswerModule } from './api/user_todo_answer/user_todo_answer.module';
+import { UserAssignmentTodoModule } from './api/user_assignment_todo/user_assignment_todo.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UserTodoAnswerModule } from './api/user_todo_answer/user_todo_answer.mo
     PostModule,
     UserPostCommentModule,
     UserTodoAnswerModule,
+    UserAssignmentTodoModule,
   ],
 })
 export class AppModule {}
