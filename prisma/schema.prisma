@@ -111,8 +111,18 @@ model UserAssignmentTodo {
   score      Int      @default(0)
   is_finish  Boolean  @default(false)
 
-  user         User       @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  user_id       String
-  assignment   Assignment @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  assignment_id String
+  user           User             @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id        String
+  assignment     Assignment       @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  assignment_id  String
+  UserTodoAnswer UserTodoAnswer?
+}
+
+model UserTodoAnswer {
+  id                   String             @id @default(uuid())
+  answer               String
+  created_at           DateTime           @default(now())
+  updated_at           DateTime           @updatedAt
+  user_assignment_todo UserAssignmentTodo @relation(fields: [user_assignment_todo_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_assignment_todo_id String @unique
 }

@@ -25,10 +25,10 @@ async function bootstrap() {
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('/googolplex/docs', app, documentFactory);
 
-  // Enable CORS
   app.enableCors({
-    origin: ['*'],
+    origin: '*', // Allow all origins
     methods: 'GET, POST, PUT, DELETE',
+    allowedHeaders: 'Content-Type, Authorization',
   });
 
   // Enable validation globally
