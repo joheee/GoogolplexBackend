@@ -1,26 +1,38 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserTodoAnswerDto } from './dto/create-user_todo_answer.dto';
 import { UpdateUserTodoAnswerDto } from './dto/update-user_todo_answer.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class UserTodoAnswerService {
-  create(createUserTodoAnswerDto: CreateUserTodoAnswerDto) {
-    return 'This action adds a new userTodoAnswer';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(createUserTodoAnswerDto: CreateUserTodoAnswerDto) {
+    return await this.prisma.userTodoAnswer.create({
+      data: createUserTodoAnswerDto,
+    });
   }
 
-  findAll() {
-    return `This action returns all userTodoAnswer`;
+  async findAll() {
+    return await this.prisma.userTodoAnswer.findMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userTodoAnswer`;
+  async findOne(id: string) {
+    return await this.prisma.userTodoAnswer.findFirst({
+      where: { id },
+    });
   }
 
-  update(id: number, updateUserTodoAnswerDto: UpdateUserTodoAnswerDto) {
-    return `This action updates a #${id} userTodoAnswer`;
+  async update(id: string, updateUserTodoAnswerDto: UpdateUserTodoAnswerDto) {
+    return await this.prisma.userTodoAnswer.update({
+      where: { id },
+      data: updateUserTodoAnswerDto,
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userTodoAnswer`;
+  async remove(id: string) {
+    return await this.prisma.userTodoAnswer.delete({
+      where: { id },
+    });
   }
 }

@@ -20,8 +20,8 @@ import { UserAssignmentTodoModule } from './api/user_assignment_todo/user_assign
     AssignmentModule,
     PostModule,
     UserPostCommentModule,
-    UserTodoAnswerModule,
     UserAssignmentTodoModule,
+    UserTodoAnswerModule,
   ],
 })
 export class AppModule {}
