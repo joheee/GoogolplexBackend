@@ -20,7 +20,7 @@ export class CreateUserAssignmentTodoDto {
   })
   @IsNotEmpty()
   @IsBoolean()
-  i_finish: boolean;
+  is_finish: boolean;
 
   @ApiProperty({ example: 'dont be lazy :)', description: 'id of user' })
   @IsNotEmpty()
