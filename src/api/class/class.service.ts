@@ -43,16 +43,38 @@ export class ClassService {
     const class_code = await this.generateUniqueClassCode();
     return await this.prisma.class.create({
       data: { ...createClassDto, class_code: class_code },
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }
 
   async findAll() {
-    return this.prisma.class.findMany();
+    return this.prisma.class.findMany({
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.class.findFirst({
       where: { id },
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }
 
@@ -60,12 +82,26 @@ export class ClassService {
     return await this.prisma.class.update({
       where: { id },
       data: updateClassDto,
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }
 
   async remove(id: string) {
     return await this.prisma.class.delete({
       where: { id },
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }
 }
