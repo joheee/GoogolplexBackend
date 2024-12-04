@@ -22,7 +22,7 @@ import {
 import { CustomResponse } from 'src/tools/CustomResponse';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 
-const TABLE_NAME = 'article';
+const TABLE_NAME = 'assignment';
 
 @ApiTags(TABLE_NAME)
 @Controller(TABLE_NAME)
