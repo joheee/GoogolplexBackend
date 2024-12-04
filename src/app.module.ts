@@ -20,5 +20,4 @@ import { PostModule } from './api/post/post.module';
     UserPostCommentModule,
   ],
 })
-
 export class AppModule {}
