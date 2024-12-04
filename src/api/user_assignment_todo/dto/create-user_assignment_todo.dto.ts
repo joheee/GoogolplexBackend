@@ -1,10 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 
 export class CreateUserAssignmentTodoDto {
   @ApiProperty({ example: 0, description: 'score input' })
   @IsOptional()
-  @IsString()
+  @IsNumber()
   score: number;
 
   @ApiProperty({
