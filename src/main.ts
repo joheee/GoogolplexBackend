@@ -27,7 +27,7 @@ async function bootstrap() {
 
   // Enable CORS
   app.enableCors({
-    origin: ['https://example.com', 'https://anotherdomain.com'], // Only allow these domains
+    origin: ['*'],
     methods: 'GET, POST, PUT, DELETE',
   });
 
