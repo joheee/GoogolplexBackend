@@ -26,7 +26,10 @@ async function bootstrap() {
   SwaggerModule.setup('/googolplex/docs', app, documentFactory);
 
   // Enable CORS
-  app.enableCors();
+  app.enableCors({
+    origin: ['https://example.com', 'https://anotherdomain.com'], // Only allow these domains
+    methods: 'GET, POST, PUT, DELETE',
+  });
 
   // Enable validation globally
   app.useGlobalPipes(new ValidationPipe());
