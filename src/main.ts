@@ -5,6 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('googolplex');
 
   const config = new DocumentBuilder()
     .setTitle('Googolplex Backend Documentation')
@@ -22,7 +23,7 @@ async function bootstrap() {
     )
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('/docs', app, documentFactory);
+  SwaggerModule.setup('/googolplex/docs', app, documentFactory);
 
   // Enable CORS
   app.enableCors();
