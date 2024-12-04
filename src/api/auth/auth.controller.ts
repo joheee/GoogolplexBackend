@@ -13,12 +13,13 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { LocalGuard } from './guards/local.guard';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { CustomResponse } from 'src/tools/CustomResponse';
+import { LoginAuthDto } from './dto/login-auth.dto';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -27,6 +28,10 @@ export class AuthController {
 
   @Post()
   @UseGuards(LocalGuard)
+  @ApiBody({
+    description: 'login user',
+    type: LoginAuthDto,
+  })
   @ApiOperation({ summary: 'login user' })
   async login(@Req() req: Request) {
     return new CustomResponse(
