@@ -53,6 +53,23 @@ export class ClassController {
     );
   }
 
+  @Get('user/:user_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by user_id` })
+  @ApiParam({
+    name: 'user_id',
+    description: `user_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByUserId(@Param('user_id') id: string) {
+    const findClass = await this.classService.findByUserId(id);
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} for user_id ${id}!`,
+      findClass,
+    );
+  }
+
   @Get(':id')
   @ApiOperation({ summary: `find ${TABLE_NAME} by id` })
   @ApiParam({

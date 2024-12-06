@@ -36,6 +36,32 @@ export class ClassService {
   async findByClassCode(class_code: string) {
     return await this.prisma.class.findFirst({
       where: { class_code },
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findByUserId(user_id: string) {
+    return await this.prisma.class.findMany({
+      where: {
+        user_class_member: {
+          some: {
+            user_id: user_id,
+          },
+        },
+      },
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }
 
