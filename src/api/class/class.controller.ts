@@ -90,6 +90,28 @@ export class ClassController {
     );
   }
 
+  @Get('code/:class_code')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by class_code` })
+  @ApiParam({
+    name: 'class_code',
+    description: `class_code ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByClassCode(@Param('class_code') id: string) {
+    const findClass = await this.classService.findByClassCode(id);
+    if (!findClass) {
+      throw new NotFoundException(
+        `${TABLE_NAME} with class code ${id} is not found!`,
+      );
+    }
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with title ${findClass.subject}!`,
+      findClass,
+    );
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
   @ApiParam({
