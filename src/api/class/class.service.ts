@@ -11,11 +11,11 @@ export class ClassService {
     const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     const numbers = '0123456789';
 
-    const randomLetters = Array.from({ length: 4 }, () =>
+    const randomLetters = Array.from({ length: 6 }, () =>
       letters.charAt(Math.floor(Math.random() * letters.length)),
     ).join('');
 
-    const randomNumbers = Array.from({ length: 4 }, () =>
+    const randomNumbers = Array.from({ length: 6 }, () =>
       numbers.charAt(Math.floor(Math.random() * numbers.length)),
     ).join('');
 
