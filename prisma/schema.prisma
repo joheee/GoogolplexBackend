@@ -130,19 +130,31 @@ model UserTodoAnswer {
 }
 
 model AssignmentFile {
-  id             String     @id @default(uuid())
-  file_name      String
-  file_extension String
-  url            String
-  assignment     Assignment @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  assignment_id  String     @unique
+  id             String @id @default(uuid())
+  fieldname    String
+  originalname String
+  encoding     String
+  mimetype     String
+  destination  String
+  filename     String
+  path         String
+  size         Int
+
+  assignment    Assignment @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  assignment_id String     @unique
 }
 
 model AnswerFile {
-  id                  String         @id @default(uuid())
-  file_name           String
-  file_extension      String
-  url                 String
+  id             String @id @default(uuid())
+  fieldname    String
+  originalname String
+  encoding     String
+  mimetype     String
+  destination  String
+  filename     String
+  path         String
+  size         Int
+
   user_todo_answer    UserTodoAnswer @relation(fields: [user_todo_answer_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   user_todo_answer_id String         @unique
 }

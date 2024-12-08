@@ -1,26 +1,57 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAssignmentFileDto } from './dto/create-assignment_file.dto';
-import { UpdateAssignmentFileDto } from './dto/update-assignment_file.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { unlinkSync } from 'fs';
 
 @Injectable()
 export class AssignmentFileService {
-  create(createAssignmentFileDto: CreateAssignmentFileDto) {
-    return 'This action adds a new assignmentFile';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async create(
+    assignment_id: string,
+    assignment_file_upload: Express.Multer.File,
+  ) {
+    console.log(assignment_id);
+    return await this.prisma.assignmentFile.create({
+      data: {
+        assignment_id,
+        ...assignment_file_upload,
+      },
+    });
   }
 
-  findAll() {
-    return `This action returns all assignmentFile`;
+  async findAll() {
+    return await this.prisma.assignmentFile.findMany({
+      include: {
+        assignment: true,
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assignmentFile`;
+  async findOne(id: string) {
+    return await this.prisma.assignmentFile.findFirst({
+      where: { id },
+      include: {
+        assignment: true,
+      },
+    });
   }
 
-  update(id: number, updateAssignmentFileDto: UpdateAssignmentFileDto) {
-    return `This action updates a #${id} assignmentFile`;
+  async findByAssignmentId(assignment_id: string) {
+    return await this.prisma.assignmentFile.findFirst({
+      where: {
+        assignment_id,
+      },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} assignmentFile`;
+  async removeInPublic(filePath: string) {
+    unlinkSync(filePath);
+    return true;
+  }
+
+  async removeInDb(id: string) {
+    return await this.prisma.assignmentFile.delete({
+      where: { id },
+    });
   }
 }
