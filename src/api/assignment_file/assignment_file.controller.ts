@@ -75,6 +75,7 @@ export class AssignmentFileController {
       throw new NotFoundException(
         `${TABLE_NAME} with assignment_id ${createAssignmentFileDto.assignment_id} already created! relation only one to one`,
       );
+      return;
     }
     assignment_file_upload.path = join(
       this.publicDir,
