@@ -27,7 +27,7 @@ export class CreateUserAssignmentTodoDto {
   @IsString()
   user_id: string;
 
-  @ApiProperty({ example: 'dont be lazy :)', description: 'id of class' })
+  @ApiProperty({ example: 'dont be lazy :)', description: 'id of assignment' })
   @IsNotEmpty()
   @IsString()
   assignment_id: string;

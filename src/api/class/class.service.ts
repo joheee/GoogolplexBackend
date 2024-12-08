@@ -71,6 +71,52 @@ export class ClassService {
     });
   }
 
+  async findByTeacherUserId(user_id: string) {
+    return await this.prisma.class.findMany({
+      where: {
+        user_class_member: {
+          some: {
+            user_id: user_id,
+            is_teacher: true,
+          },
+        },
+      },
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+  }
+
+  async findByStudentUserId(user_id: string) {
+    return await this.prisma.class.findMany({
+      where: {
+        user_class_member: {
+          some: {
+            user_id: user_id,
+            is_teacher: false,
+          },
+        },
+      },
+      include: {
+        user_class_member: {
+          include: {
+            user: true,
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+  }
+
   async create(createClassDto: CreateClassDto) {
     const class_code = await this.generateUniqueClassCode();
     return await this.prisma.class.create({

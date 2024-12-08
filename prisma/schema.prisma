@@ -77,7 +77,7 @@ model Assignment {
   due_date             DateTime
   post                 Post?
   user_assignment_todo UserAssignmentTodo[]
-  AssignmentFile       AssignmentFile?
+  assignment_file      AssignmentFile?
 }
 
 model Post {
@@ -112,11 +112,11 @@ model UserAssignmentTodo {
   score      Int      @default(0)
   is_finish  Boolean  @default(false)
 
-  user           User            @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  user_id        String
-  assignment     Assignment      @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  assignment_id  String
-  UserTodoAnswer UserTodoAnswer?
+  user             User            @relation(fields: [user_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  user_id          String
+  assignment       Assignment      @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  assignment_id    String
+  user_todo_answer UserTodoAnswer?
 }
 
 model UserTodoAnswer {
@@ -126,7 +126,7 @@ model UserTodoAnswer {
   updated_at              DateTime           @updatedAt
   user_assignment_todo    UserAssignmentTodo @relation(fields: [user_assignment_todo_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   user_assignment_todo_id String             @unique
-  AnswerFile              AnswerFile?
+  answer_file             AnswerFile?
 }
 
 model AssignmentFile {

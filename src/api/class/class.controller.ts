@@ -70,6 +70,40 @@ export class ClassController {
     );
   }
 
+  @Get('user/teacher/:user_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} teacher by user_id` })
+  @ApiParam({
+    name: 'user_id',
+    description: `user_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByTeacherUserId(@Param('user_id') id: string) {
+    const findClass = await this.classService.findByTeacherUserId(id);
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} for user_id ${id}!`,
+      findClass,
+    );
+  }
+
+  @Get('user/student/:user_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} student by user_id` })
+  @ApiParam({
+    name: 'user_id',
+    description: `user_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByStudentUserId(@Param('user_id') id: string) {
+    const findClass = await this.classService.findByStudentUserId(id);
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} for user_id ${id}!`,
+      findClass,
+    );
+  }
+
   @Get(':id')
   @ApiOperation({ summary: `find ${TABLE_NAME} by id` })
   @ApiParam({
