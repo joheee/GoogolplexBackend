@@ -43,6 +43,9 @@ export class ClassService {
           },
         },
       },
+      orderBy: {
+        created_at: 'desc',
+      },
     });
   }
 
@@ -61,6 +64,9 @@ export class ClassService {
             user: true,
           },
         },
+      },
+      orderBy: {
+        created_at: 'desc',
       },
     });
   }
@@ -88,6 +94,9 @@ export class ClassService {
           },
         },
       },
+      orderBy: {
+        created_at: 'desc',
+      },
     });
   }
 
@@ -100,6 +109,9 @@ export class ClassService {
             user: true,
           },
         },
+      },
+      orderBy: {
+        created_at: 'desc',
       },
     });
   }

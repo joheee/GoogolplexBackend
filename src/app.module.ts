@@ -9,9 +9,16 @@ import { UserPostCommentModule } from './api/user_post_comment/user_post_comment
 import { PostModule } from './api/post/post.module';
 import { UserTodoAnswerModule } from './api/user_todo_answer/user_todo_answer.module';
 import { UserAssignmentTodoModule } from './api/user_assignment_todo/user_assignment_todo.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+import { AssignmentFileModule } from './api/assignment_file/assignment_file.module';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/public',
+    }),
     AuthModule,
     NotificationModule,
     ClassModule,
@@ -22,6 +29,7 @@ import { UserAssignmentTodoModule } from './api/user_assignment_todo/user_assign
     UserPostCommentModule,
     UserAssignmentTodoModule,
     UserTodoAnswerModule,
+    AssignmentFileModule,
   ],
 })
 export class AppModule {}
