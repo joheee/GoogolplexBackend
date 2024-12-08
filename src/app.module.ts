@@ -12,6 +12,7 @@ import { UserAssignmentTodoModule } from './api/user_assignment_todo/user_assign
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AssignmentFileModule } from './api/assignment_file/assignment_file.module';
+import { AnswerFileModule } from './api/answer_file/answer_file.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AssignmentFileModule } from './api/assignment_file/assignment_file.modu
     UserAssignmentTodoModule,
     UserTodoAnswerModule,
     AssignmentFileModule,
+    AnswerFileModule,
   ],
 })
 export class AppModule {}
