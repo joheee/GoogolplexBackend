@@ -87,10 +87,10 @@ model Post {
   updated_at DateTime @updatedAt
 
   user_post_comment UserPostComment[]
-  article           Article           @relation(fields: [article_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  article           Article?           @relation(fields: [article_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   assignment        Assignment?       @relation(fields: [assignment_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
   class             Class             @relation(fields: [class_id], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  article_id        String            @unique
+  article_id        String?            @unique
   assignment_id     String?           @unique
   class_id          String
 }
