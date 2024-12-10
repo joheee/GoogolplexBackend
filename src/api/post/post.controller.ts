@@ -51,13 +51,15 @@ export class PostController {
     }
 
     // ARTICLE VALIDATION
-    const findArticle = await this.articleService.findOne(
-      createPostDto.article_id,
-    );
-    if (!findArticle) {
-      throw new NotFoundException(
-        `article with id ${createPostDto.article_id} is not found!`,
+    if (createPostDto.article_id) {
+      const findArticle = await this.articleService.findOne(
+        createPostDto.article_id,
       );
+      if (!findArticle) {
+        throw new NotFoundException(
+          `article with id ${createPostDto.article_id} is not found!`,
+        );
+      }
     }
 
     // POST VALIDATION
