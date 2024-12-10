@@ -67,8 +67,5 @@ COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 # Copy the public directory
 COPY --chown=node:node --from=build /usr/src/app/public ./public
 
-# install openssl
-RUN apk add openssl1.1-compat
-
 # Start the server using the production build
 CMD [ "node", "dist/main.js" ]
