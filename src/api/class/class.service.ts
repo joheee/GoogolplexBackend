@@ -155,6 +155,16 @@ export class ClassService {
             user: true,
           },
         },
+        post: {
+          include: {
+            article: true,
+            assignment: {
+              include: {
+                assignment_file: true,
+              },
+            },
+          },
+        },
       },
       orderBy: {
         created_at: 'desc',
