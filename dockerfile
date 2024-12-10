@@ -7,6 +7,9 @@ FROM node:20-alpine As development
 # Create app directory
 WORKDIR /usr/src/app
 
+# install openssl
+RUN apk add openssl1.1-compat
+
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
 # Copying this first prevents re-running npm install on every code change.
@@ -62,6 +65,9 @@ COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
 # Copy the public directory
 COPY --chown=node:node --from=build /usr/src/app/public ./public
+
+# install openssl
+RUN apk add openssl1.1-compat
 
 # Start the server using the production build
 CMD [ "node", "dist/main.js" ]
