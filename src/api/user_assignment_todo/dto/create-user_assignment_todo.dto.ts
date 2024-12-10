@@ -11,16 +11,16 @@ export class CreateUserAssignmentTodoDto {
   @ApiProperty({ example: 0, description: 'score input' })
   @IsOptional()
   @IsNumber()
-  score: number;
+  score?: number;
 
   @ApiProperty({
     example: false,
     description: 'finish (true) and not finish (false)',
     type: Boolean,
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
-  is_finish: boolean;
+  is_finish?: boolean;
 
   @ApiProperty({ example: 'dont be lazy :)', description: 'id of user' })
   @IsNotEmpty()

@@ -22,6 +22,14 @@ export class UserClassMemberService {
     });
   }
 
+  async findManyByClassId(class_id: string) {
+    return await this.prisma.userClassMember.findMany({
+      where: {
+        class_id,
+      },
+    });
+  }
+
   async findByUserAndClass(user_id: string, class_id: string) {
     return await this.prisma.userClassMember.findFirst({
       where: {

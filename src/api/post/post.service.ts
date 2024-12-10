@@ -13,15 +13,6 @@ export class PostService {
         assignment_id: createPostDto.assignment_id,
         class_id: createPostDto.class_id,
       },
-      include: {
-        article: true,
-        assignment: true,
-        class: {
-          include: {
-            user_class_member: true,
-          },
-        },
-      },
     });
   }
 
@@ -29,7 +20,16 @@ export class PostService {
     return await this.prisma.post.findMany({
       include: {
         article: true,
-        assignment: true,
+        assignment: {
+          include: {
+            assignment_file: true,
+            user_assignment_todo: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
         class: {
           include: {
             user_class_member: true,
@@ -44,7 +44,16 @@ export class PostService {
       where: { id },
       include: {
         article: true,
-        assignment: true,
+        assignment: {
+          include: {
+            assignment_file: true,
+            user_assignment_todo: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
         class: {
           include: {
             user_class_member: true,
@@ -58,30 +67,12 @@ export class PostService {
     return await this.prisma.post.update({
       where: { id },
       data: updatePostDto,
-      include: {
-        article: true,
-        assignment: true,
-        class: {
-          include: {
-            user_class_member: true,
-          },
-        },
-      },
     });
   }
 
   async remove(id: string) {
     return await this.prisma.post.delete({
       where: { id },
-      include: {
-        article: true,
-        assignment: true,
-        class: {
-          include: {
-            user_class_member: true,
-          },
-        },
-      },
     });
   }
 }

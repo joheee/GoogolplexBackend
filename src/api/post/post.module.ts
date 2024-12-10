@@ -6,6 +6,8 @@ import { ArticleService } from '../article/article.service';
 import { AssignmentService } from '../assignment/assignment.service';
 import { ClassService } from '../class/class.service';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
+import { UserClassMemberService } from '../user_class_member/user_class_member.service';
+import { UserAssignmentTodoService } from '../user_assignment_todo/user_assignment_todo.service';
 
 @Module({
   imports: [PrismaModule],
@@ -15,6 +17,8 @@ import { JwtStrategy } from '../auth/strategies/jwt.strategy';
     ArticleService,
     AssignmentService,
     ClassService,
+    UserClassMemberService,
+    UserAssignmentTodoService,
     JwtStrategy,
   ],
 })
