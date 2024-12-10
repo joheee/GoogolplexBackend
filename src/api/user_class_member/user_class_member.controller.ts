@@ -39,7 +39,7 @@ export class UserClassMemberController {
     private readonly classService: ClassService,
   ) {}
 
-  @Post('join-class')
+  @Post('join_class')
   @ApiOperation({ summary: `join class by class_id and create ${TABLE_NAME}` })
   async createJoinClass(
     @Body() createJoinByClassCodeDto: CreateJoinByClassCodeDto,

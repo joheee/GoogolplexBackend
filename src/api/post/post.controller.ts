@@ -45,7 +45,7 @@ export class PostController {
     private readonly assignmentService: AssignmentService,
   ) {}
 
-  @Post('chaining-post/:class_id')
+  @Post('chaining_post/:class_id')
   @ApiParam({
     name: 'class_id',
     description: `id class`,
