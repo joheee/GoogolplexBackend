@@ -48,6 +48,25 @@ export class UserTodoAnswerController {
       );
     }
 
+    // POST USER_TODO_ANSWER BY USER_ASSIGNMENT_TODO_ID
+    const findByUserAssignmentTodoId =
+      await this.userTodoAnswerService.findByUserAssignmentTodoId(
+        createUserTodoAnswerDto.user_assignment_todo_id,
+      );
+    if (findByUserAssignmentTodoId) {
+      throw new NotFoundException(
+        `user_todo_answer with user_assignment_todo_id ${createUserTodoAnswerDto.user_assignment_todo_id} is already created!`,
+      );
+    }
+
+    // UPDATE USER_ASSIGNMENT_TODO IS_FINISH TRUE
+    await this.userAssignmentTodoService.update(
+      createUserTodoAnswerDto.user_assignment_todo_id,
+      {
+        is_finish: true,
+      },
+    );
+
     const newUserTodoAnswer = await this.userTodoAnswerService.create(
       createUserTodoAnswerDto,
     );

@@ -23,6 +23,14 @@ export class UserTodoAnswerService {
     });
   }
 
+  async findByUserAssignmentTodoId(user_assignment_todo_id: string) {
+    return await this.prisma.userTodoAnswer.findFirst({
+      where: {
+        user_assignment_todo_id,
+      },
+    });
+  }
+
   async update(id: string, updateUserTodoAnswerDto: UpdateUserTodoAnswerDto) {
     return await this.prisma.userTodoAnswer.update({
       where: { id },
