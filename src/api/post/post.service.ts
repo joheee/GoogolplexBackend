@@ -30,7 +30,11 @@ export class PostService {
       include: {
         article: true,
         assignment: true,
-        class: true,
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
       },
     });
   }
