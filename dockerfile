@@ -8,7 +8,8 @@ FROM node:20-alpine As development
 WORKDIR /usr/src/app
 
 # install openssl
-RUN apk add openssl1.1-compat
+RUN apk add openssl
+
 
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
