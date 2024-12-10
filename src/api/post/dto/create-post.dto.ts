@@ -3,9 +3,9 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreatePostDto {
   @ApiProperty({ example: 'dont be lazy :)', description: 'id of article' })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  article_id: string;
+  article_id?: string;
 
   @ApiProperty({ example: 'dont be lazy :)', description: 'id of assignment' })
   @IsOptional()
