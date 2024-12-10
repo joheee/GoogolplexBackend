@@ -24,6 +24,7 @@ import { AuthService } from '../auth/auth.service';
 import { ClassService } from '../class/class.service';
 import { CustomResponse } from 'src/tools/CustomResponse';
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
+import { CreateJoinByClassCodeDto } from './dto/create-join_by_class_code';
 
 const TABLE_NAME = 'user_class_member';
 
@@ -37,6 +38,52 @@ export class UserClassMemberController {
     private readonly authService: AuthService,
     private readonly classService: ClassService,
   ) {}
+
+  @Post('join-class')
+  @ApiOperation({ summary: `join class by class_id and create ${TABLE_NAME}` })
+  async createJoinClass(
+    @Body() createJoinByClassCodeDto: CreateJoinByClassCodeDto,
+  ) {
+    const findUser = await this.authService.findById(
+      createJoinByClassCodeDto.user_id,
+    );
+    if (!findUser) {
+      throw new NotFoundException(
+        `user with id ${createJoinByClassCodeDto.user_id} is not found!`,
+      );
+    }
+
+    const findClass = await this.classService.findByClassCode(
+      createJoinByClassCodeDto.class_code,
+    );
+    if (!findClass) {
+      throw new NotFoundException(
+        `class with code ${createJoinByClassCodeDto.class_code} is not found!`,
+      );
+    }
+
+    const findDuplicateUserClass =
+      await this.userClassMemberService.findByUserAndClass(
+        createJoinByClassCodeDto.user_id,
+        findClass.id,
+      );
+    if (findDuplicateUserClass) {
+      throw new MethodNotAllowedException(
+        `user ${findUser.name} already join class ${findClass.subject}!`,
+      );
+    }
+
+    const newUserClassMember = await this.userClassMemberService.create({
+      user_id: createJoinByClassCodeDto.user_id,
+      is_teacher: createJoinByClassCodeDto.is_teacher,
+      class_id: findClass.id,
+    });
+    return new CustomResponse(
+      HttpStatus.OK,
+      `${TABLE_NAME} successfully created!`,
+      newUserClassMember,
+    );
+  }
 
   @Post()
   @ApiOperation({ summary: `create ${TABLE_NAME}` })
