@@ -7,9 +7,6 @@ FROM node:20-alpine As development
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install openssl
-RUN apt-get update && apt-get install -y openssl
-
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure copying both package.json AND package-lock.json (when available).
 # Copying this first prevents re-running npm install on every code change.
