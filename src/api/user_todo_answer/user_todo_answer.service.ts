@@ -14,12 +14,29 @@ export class UserTodoAnswerService {
   }
 
   async findAll() {
-    return await this.prisma.userTodoAnswer.findMany();
+    return await this.prisma.userTodoAnswer.findMany({
+      include: {
+        answer_file: true,
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.userTodoAnswer.findFirst({
       where: { id },
+      include: {
+        answer_file: true,
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+      },
     });
   }
 
@@ -27,6 +44,14 @@ export class UserTodoAnswerService {
     return await this.prisma.userTodoAnswer.findFirst({
       where: {
         user_assignment_todo_id,
+      },
+      include: {
+        answer_file: true,
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
   }
