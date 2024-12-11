@@ -36,6 +36,36 @@ export class PostService {
           },
         },
       },
+      orderBy: {
+        created_at: 'desc',
+      },
+    });
+  }
+
+  async findByClassId(class_id: string) {
+    return await this.prisma.post.findMany({
+      where: { class_id },
+      include: {
+        article: true,
+        assignment: {
+          include: {
+            assignment_file: true,
+            user_assignment_todo: {
+              include: {
+                user: true,
+              },
+            },
+          },
+        },
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
+      },
+      orderBy: {
+        created_at: 'desc',
+      },
     });
   }
 
@@ -59,6 +89,9 @@ export class PostService {
             user_class_member: true,
           },
         },
+      },
+      orderBy: {
+        created_at: 'desc',
       },
     });
   }

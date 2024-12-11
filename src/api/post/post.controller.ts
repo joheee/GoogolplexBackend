@@ -181,6 +181,23 @@ export class PostController {
     );
   }
 
+  @Get('class/:class_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by class_id` })
+  @ApiParam({
+    name: 'class_id',
+    description: `class_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByClassId(@Param('class_id') class_id: string) {
+    const findPost = await this.postService.findByClassId(class_id);
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with class_id ${class_id}!`,
+      findPost,
+    );
+  }
+
   @Get(':id')
   @ApiOperation({ summary: `find ${TABLE_NAME} by id` })
   @ApiParam({

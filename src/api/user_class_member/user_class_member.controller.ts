@@ -169,11 +169,6 @@ export class UserClassMemberController {
   async findManyByClassId(@Param('class_id') class_id: string) {
     const findUserClassMember =
       await this.userClassMemberService.findManyByClassId(class_id);
-    if (!findUserClassMember) {
-      throw new NotFoundException(
-        `${TABLE_NAME} with class_id ${class_id} is not found!`,
-      );
-    }
     return new CustomResponse(
       HttpStatus.OK,
       `found ${TABLE_NAME} with class_id ${class_id}!`,
