@@ -17,6 +17,11 @@ export class UserClassMemberService {
       include: {
         user: true,
       },
+      orderBy: {
+        user: {
+          name: 'asc',
+        },
+      },
     });
   }
 
@@ -25,6 +30,11 @@ export class UserClassMemberService {
       where: { id },
       include: {
         user: true,
+      },
+      orderBy: {
+        user: {
+          name: 'asc',
+        },
       },
     });
   }
@@ -37,6 +47,11 @@ export class UserClassMemberService {
       include: {
         user: true,
       },
+      orderBy: {
+        user: {
+          name: 'asc',
+        },
+      },
     });
   }
 
@@ -48,6 +63,11 @@ export class UserClassMemberService {
       },
       include: {
         user: true,
+      },
+      orderBy: {
+        user: {
+          name: 'asc',
+        },
       },
     });
   }
