@@ -14,12 +14,46 @@ export class AssignmentService {
   }
 
   async findAll() {
-    return await this.prisma.assignment.findMany();
+    return await this.prisma.assignment.findMany({
+      include: {
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+        assignment_file: true,
+      },
+    });
+  }
+
+  async findByClassId(class_id: string) {
+    return await this.prisma.assignment.findMany({
+      where: {
+        post: {
+          class_id,
+        },
+      },
+      include: {
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.assignment.findFirst({
       where: { id },
+      include: {
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+        assignment_file: true,
+      },
     });
   }
 
