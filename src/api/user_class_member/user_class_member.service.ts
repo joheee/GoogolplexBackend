@@ -13,12 +13,19 @@ export class UserClassMemberService {
   }
 
   async findAll() {
-    return await this.prisma.userClassMember.findMany();
+    return await this.prisma.userClassMember.findMany({
+      include: {
+        user: true,
+      },
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.userClassMember.findFirst({
       where: { id },
+      include: {
+        user: true,
+      },
     });
   }
 
@@ -26,6 +33,9 @@ export class UserClassMemberService {
     return await this.prisma.userClassMember.findMany({
       where: {
         class_id,
+      },
+      include: {
+        user: true,
       },
     });
   }
@@ -35,6 +45,9 @@ export class UserClassMemberService {
       where: {
         user_id,
         class_id,
+      },
+      include: {
+        user: true,
       },
     });
   }

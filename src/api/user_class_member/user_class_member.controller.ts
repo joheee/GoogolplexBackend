@@ -158,6 +158,29 @@ export class UserClassMemberController {
     );
   }
 
+  @Get('class/:class_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by class_id` })
+  @ApiParam({
+    name: 'class_id',
+    description: `class_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findManyByClassId(@Param('class_id') class_id: string) {
+    const findUserClassMember =
+      await this.userClassMemberService.findManyByClassId(class_id);
+    if (!findUserClassMember) {
+      throw new NotFoundException(
+        `${TABLE_NAME} with class_id ${class_id} is not found!`,
+      );
+    }
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with class_id ${class_id}!`,
+      findUserClassMember,
+    );
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
   @ApiParam({
