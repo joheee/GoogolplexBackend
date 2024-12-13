@@ -1,20 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { diskStorage } from 'multer';
-import * as path from 'path';
+import { extname } from 'path';
 
 @Injectable()
 export class AnswerFileUpload {
   static storageOptions = diskStorage({
-    destination: path.join(
-      __dirname,
-      '..',
-      'googolplex',
-      'public',
-      'answer_file',
-    ),
+    destination: './public/answer_file',
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      const ext = path.extname(file.originalname);
+      const ext = extname(file.originalname);
       cb(null, `${file.fieldname}-${uniqueSuffix}${ext}`);
     },
   });
