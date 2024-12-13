@@ -167,11 +167,30 @@ export class UserClassMemberController {
     example: 'dont be lazy :)',
   })
   async findManyByClassId(@Param('class_id') class_id: string) {
+    // Fetch all class members by class_id
     const findUserClassMember =
       await this.userClassMemberService.findManyByClassId(class_id);
+
+    // Check if there is any admin in the class
+    const isAnyAdmin = findUserClassMember.some(
+      (member) => member.is_teacher === true,
+    );
+
+    // If no admin exists, promote the first user to be an admin
+    if (!isAnyAdmin && findUserClassMember.length > 0) {
+      const firstUser = findUserClassMember[0];
+
+      firstUser.is_teacher = true;
+
+      await this.userClassMemberService.update(firstUser.id, {
+        is_teacher: true,
+      });
+    }
+
+    // Return the users (class members) with class_id
     return new CustomResponse(
       HttpStatus.OK,
-      `found ${TABLE_NAME} with class_id ${class_id}!`,
+      `Found ${TABLE_NAME} with class_id ${class_id}!`,
       findUserClassMember,
     );
   }
@@ -283,6 +302,22 @@ export class UserClassMemberController {
     const findUserClassMember = await this.userClassMemberService.findOne(id);
     if (!findUserClassMember) {
       throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
+    }
+
+    // if user_class_member inside current class === 1
+    // then delete the class
+    const findTotalUserClassMember = await this.classService.findOne(
+      findUserClassMember.class_id,
+    );
+    if (findTotalUserClassMember.user_class_member.length === 1) {
+      const deleteClass = await this.classService.remove(
+        findUserClassMember.class_id,
+      );
+      return new CustomResponse(
+        HttpStatus.OK,
+        `${TABLE_NAME} is successfully deleted!`,
+        deleteClass,
+      );
     }
 
     const deleteUserClassMember = await this.userClassMemberService.remove(id);
