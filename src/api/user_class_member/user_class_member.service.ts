@@ -17,11 +17,16 @@ export class UserClassMemberService {
       include: {
         user: true,
       },
-      orderBy: {
-        user: {
-          name: 'asc',
+      orderBy: [
+        {
+          is_teacher: 'desc', // First order by is_teacher
         },
-      },
+        {
+          user: {
+            name: 'asc', // Then order by user.name
+          },
+        },
+      ],
     });
   }
 
@@ -31,11 +36,16 @@ export class UserClassMemberService {
       include: {
         user: true,
       },
-      orderBy: {
-        user: {
-          name: 'asc',
+      orderBy: [
+        {
+          is_teacher: 'desc', // First order by is_teacher
         },
-      },
+        {
+          user: {
+            name: 'asc', // Then order by user.name
+          },
+        },
+      ],
     });
   }
 
@@ -47,11 +57,16 @@ export class UserClassMemberService {
       include: {
         user: true,
       },
-      orderBy: {
-        user: {
-          name: 'asc',
+      orderBy: [
+        {
+          is_teacher: 'desc', // First order by is_teacher
         },
-      },
+        {
+          user: {
+            name: 'asc', // Then order by user.name
+          },
+        },
+      ],
     });
   }
 
@@ -64,11 +79,16 @@ export class UserClassMemberService {
       include: {
         user: true,
       },
-      orderBy: {
-        user: {
-          name: 'asc',
+      orderBy: [
+        {
+          is_teacher: 'desc', // First order by is_teacher
         },
-      },
+        {
+          user: {
+            name: 'asc', // Then order by user.name
+          },
+        },
+      ],
     });
   }
 
