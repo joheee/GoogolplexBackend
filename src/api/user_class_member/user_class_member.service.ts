@@ -38,6 +38,11 @@ export class UserClassMemberService {
       where: { id },
       include: {
         user: true,
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
       },
       orderBy: [
         {

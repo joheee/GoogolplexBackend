@@ -270,4 +270,26 @@ export class UserClassMemberController {
       deleteUserClassMember,
     );
   }
+
+  @Delete('leave/:id')
+  @ApiOperation({ summary: `leave class ${TABLE_NAME} by id` })
+  @ApiParam({
+    name: 'id',
+    description: `id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async leaveClass(@Param('id') id: string) {
+    const findUserClassMember = await this.userClassMemberService.findOne(id);
+    if (!findUserClassMember) {
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
+    }
+
+    const deleteUserClassMember = await this.userClassMemberService.remove(id);
+    return new CustomResponse(
+      HttpStatus.OK,
+      `${TABLE_NAME} is successfully deleted!`,
+      deleteUserClassMember,
+    );
+  }
 }
