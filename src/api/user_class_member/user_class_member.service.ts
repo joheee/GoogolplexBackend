@@ -9,6 +9,9 @@ export class UserClassMemberService {
   async create(createUserClassMemberDto: CreateUserClassMemberDto) {
     return await this.prisma.userClassMember.create({
       data: createUserClassMemberDto,
+      include: {
+        user: true,
+      },
     });
   }
 
@@ -96,12 +99,18 @@ export class UserClassMemberService {
     return await this.prisma.userClassMember.update({
       where: { id },
       data: updateUserClassMemberDto,
+      include: {
+        user: true,
+      },
     });
   }
 
   async remove(id: string) {
     return await this.prisma.userClassMember.delete({
       where: { id },
+      include: {
+        user: true,
+      },
     });
   }
 }
