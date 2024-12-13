@@ -39,6 +39,7 @@ export class AssignmentService {
             user: true,
           },
         },
+        assignment_file: true,
       },
     });
   }
