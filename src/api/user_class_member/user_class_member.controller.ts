@@ -176,6 +176,33 @@ export class UserClassMemberController {
     );
   }
 
+  @Get('user/class/:user_id/:class_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by user_id and class_id` })
+  @ApiParam({
+    name: 'class_id',
+    description: `class_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  @ApiParam({
+    name: 'user_id',
+    description: `user_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByUserAndClass(
+    @Param('user_id') user_id: string,
+    @Param('class_id') class_id: string,
+  ) {
+    const findUserClassMember =
+      await this.userClassMemberService.findByUserAndClass(user_id, class_id);
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with user_id ${user_id} and class_id ${class_id}!`,
+      findUserClassMember,
+    );
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
   @ApiParam({
