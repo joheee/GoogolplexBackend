@@ -18,7 +18,7 @@ import { AnswerFileModule } from './api/answer_file/answer_file.module';
   imports: [
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/public',
+      serveRoot: '/googolplex/public',
     }),
     AuthModule,
     NotificationModule,

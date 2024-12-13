@@ -5,7 +5,7 @@ import { extname } from 'path';
 @Injectable()
 export class AssignmentFileUpload {
   static storageOptions = diskStorage({
-    destination: './public/assignment_file',
+    destination: './googolplex/public/assignment_file',
     filename: (req, file, cb) => {
       const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
       const ext = extname(file.originalname);
