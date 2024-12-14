@@ -167,7 +167,7 @@ export class UserAssignmentTodoController {
 
     return new CustomResponse(
       HttpStatus.OK,
-      `found ${TABLE_NAME} with length ${findManyByUserAndAssignment.id}!`,
+      `found ${TABLE_NAME} with id ${findManyByUserAndAssignment.id}!`,
       findManyByUserAndAssignment,
     );
   }
