@@ -40,6 +40,20 @@ export class UserTodoAnswerService {
     });
   }
 
+  async findByUserAssignmentTodo(user_assignment_todo_id: string) {
+    return await this.prisma.userTodoAnswer.findFirst({
+      where: { user_assignment_todo_id },
+      include: {
+        answer_file: true,
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+  }
+
   async findByUserAssignmentTodoId(user_assignment_todo_id: string) {
     return await this.prisma.userTodoAnswer.findFirst({
       where: {
