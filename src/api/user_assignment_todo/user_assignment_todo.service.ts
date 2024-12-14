@@ -98,7 +98,7 @@ export class UserAssignmentTodoService {
     user_id: string,
     assignment_id: string,
   ) {
-    return await this.prisma.userAssignmentTodo.findMany({
+    return await this.prisma.userAssignmentTodo.findFirst({
       where: {
         user_id,
         assignment_id,
