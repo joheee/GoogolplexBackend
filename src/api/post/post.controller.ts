@@ -162,6 +162,22 @@ export class PostController {
           `assignment with id ${createPostDto.assignment_id} is not found!`,
         );
       }
+
+      // CREATE USER_ASSIGNMENT_TODO
+      const allUserClassMember =
+        await this.userClassMemberService.findManyByClassId(
+          createPostDto.class_id,
+        );
+
+      // create user_todo_answer for each student
+      for (const member of allUserClassMember) {
+        if (!member.is_teacher) {
+          await this.userAssignmentTodoService.create({
+            assignment_id: createPostDto.assignment_id,
+            user_id: member.user_id,
+          });
+        }
+      }
     }
 
     const newPost = await this.postService.create(createPostDto);

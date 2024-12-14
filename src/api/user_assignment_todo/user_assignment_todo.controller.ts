@@ -144,7 +144,7 @@ export class UserAssignmentTodoController {
     example: 'dont be lazy :)',
   })
   async findManyByUserIdAndAssignmentId(
-    @Param('asssignment_id') asssignment_id: string,
+    @Param('assignment_id') asssignment_id: string,
     @Param('user_id') user_id: string,
   ) {
     const findAssignment = await this.assignmentService.findOne(asssignment_id);
