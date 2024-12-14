@@ -30,6 +30,9 @@ export class UserPostCommentService {
           },
         },
       },
+      orderBy: {
+        created_at: 'desc',
+      },
     });
   }
 
@@ -43,6 +46,9 @@ export class UserPostCommentService {
             user_class_member: true,
           },
         },
+      },
+      orderBy: {
+        created_at: 'desc',
       },
     });
   }
@@ -59,6 +65,9 @@ export class UserPostCommentService {
             user_class_member: true,
           },
         },
+      },
+      orderBy: {
+        created_at: 'desc',
       },
     });
   }
