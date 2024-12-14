@@ -130,7 +130,7 @@ export class UserAssignmentTodoController {
   }
 
   @Get('user/assignment/:user_id/:assignment_id')
-  @ApiOperation({ summary: `find ${TABLE_NAME} by user_id` })
+  @ApiOperation({ summary: `find ${TABLE_NAME} by user_id and assignment_id` })
   @ApiParam({
     name: 'user_id',
     description: `user_id ${TABLE_NAME}`,
