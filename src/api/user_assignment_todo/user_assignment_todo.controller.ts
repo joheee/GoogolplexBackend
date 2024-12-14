@@ -104,6 +104,74 @@ export class UserAssignmentTodoController {
     );
   }
 
+  @Get('user/:user_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by user_id` })
+  @ApiParam({
+    name: 'user_id',
+    description: `user_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findManyByUserId(@Param('user_id') user_id: string) {
+    // USER VALIDATION
+    const findUser = await this.authService.findById(user_id);
+    if (!findUser) {
+      throw new NotFoundException(`user with id ${user_id} is not found!`);
+    }
+
+    const findManyByUserAndAssignment =
+      await this.userAssignmentTodoService.findManyByUserId(user_id);
+
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with length ${findManyByUserAndAssignment.length}!`,
+      findManyByUserAndAssignment,
+    );
+  }
+
+  @Get('user/assignment/:user_id/:assignment_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by user_id` })
+  @ApiParam({
+    name: 'user_id',
+    description: `user_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  @ApiParam({
+    name: 'assignment_id',
+    description: `assignment_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findManyByUserIdAndAssignmentId(
+    @Param('asssignment_id') asssignment_id: string,
+    @Param('user_id') user_id: string,
+  ) {
+    const findAssignment = await this.assignmentService.findOne(asssignment_id);
+    if (!findAssignment) {
+      throw new NotFoundException(
+        `${TABLE_NAME} with asssignment_id ${asssignment_id} is not found!`,
+      );
+    }
+    // USER VALIDATION
+    const findUser = await this.authService.findById(user_id);
+    if (!findUser) {
+      throw new NotFoundException(`user with id ${user_id} is not found!`);
+    }
+
+    const findManyByUserAndAssignment =
+      await this.userAssignmentTodoService.findManyByUserIdAndAssignmentId(
+        user_id,
+        asssignment_id,
+      );
+
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with length ${findManyByUserAndAssignment.length}!`,
+      findManyByUserAndAssignment,
+    );
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
   @ApiParam({
