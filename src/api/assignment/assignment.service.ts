@@ -21,6 +21,7 @@ export class AssignmentService {
             user: true,
           },
         },
+        post: true,
         assignment_file: true,
       },
     });
@@ -39,6 +40,7 @@ export class AssignmentService {
             user: true,
           },
         },
+        post: true,
         assignment_file: true,
       },
     });
@@ -53,6 +55,7 @@ export class AssignmentService {
             user: true,
           },
         },
+        post: true,
         assignment_file: true,
       },
     });
