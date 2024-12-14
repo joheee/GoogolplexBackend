@@ -92,12 +92,14 @@ export class PostController {
       const allUserClassMember =
         await this.userClassMemberService.findManyByClassId(class_id);
 
-      // for each and create user_todo_answer
+      // create user_todo_answer for each student
       for (const member of allUserClassMember) {
-        await this.userAssignmentTodoService.create({
-          assignment_id: createAssignment.id,
-          user_id: member.user_id,
-        });
+        if (!member.is_teacher) {
+          await this.userAssignmentTodoService.create({
+            assignment_id: createAssignment.id,
+            user_id: member.user_id,
+          });
+        }
       }
 
       // update the post
