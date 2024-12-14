@@ -16,6 +16,7 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
+        assignment: true,
         user: {
           include: {
             user_class_member: true,
@@ -33,6 +34,7 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
+        assignment: true,
         user: {
           include: {
             user_class_member: true,
@@ -53,6 +55,7 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
+        assignment: true,
         user: {
           include: {
             user_class_member: true,
@@ -77,6 +80,7 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
+        assignment: true,
         user: {
           include: {
             user_class_member: true,
@@ -95,6 +99,7 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
+        assignment: true,
         user: {
           include: {
             user_class_member: true,
@@ -117,6 +122,7 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
+        assignment: true,
         user: {
           include: {
             user_class_member: true,
@@ -135,6 +141,7 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
+        assignment: true,
         user: {
           include: {
             user_class_member: true,
