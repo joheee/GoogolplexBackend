@@ -101,6 +101,29 @@ export class UserPostCommentController {
     );
   }
 
+  @Get('post/:post_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by post_id` })
+  @ApiParam({
+    name: 'post_id',
+    description: `post_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByPostId(@Param('post_id') post_id: string) {
+    // POST VALIDATION
+    const findPost = await this.postService.findOne(post_id);
+    if (!findPost) {
+      throw new NotFoundException(`post with id ${post_id} is not found!`);
+    }
+    const findManyByPostId =
+      await this.userPostCommentService.findByPostId(post_id);
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with id length ${findManyByPostId.length}!`,
+      findManyByPostId,
+    );
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
   @ApiParam({

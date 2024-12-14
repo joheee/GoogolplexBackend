@@ -9,16 +9,57 @@ export class UserPostCommentService {
   async create(createUserPostCommentDto: CreateUserPostCommentDto) {
     return await this.prisma.userPostComment.create({
       data: createUserPostCommentDto,
+      include: {
+        post: true,
+        user: {
+          include: {
+            user_class_member: true,
+          },
+        },
+      },
     });
   }
 
   async findAll() {
-    return await this.prisma.userPostComment.findMany();
+    return await this.prisma.userPostComment.findMany({
+      include: {
+        post: true,
+        user: {
+          include: {
+            user_class_member: true,
+          },
+        },
+      },
+    });
   }
 
   async findOne(id: string) {
     return await this.prisma.userPostComment.findFirst({
       where: { id },
+      include: {
+        post: true,
+        user: {
+          include: {
+            user_class_member: true,
+          },
+        },
+      },
+    });
+  }
+
+  async findByPostId(post_id: string) {
+    return await this.prisma.userPostComment.findMany({
+      where: {
+        post_id,
+      },
+      include: {
+        post: true,
+        user: {
+          include: {
+            user_class_member: true,
+          },
+        },
+      },
     });
   }
 
@@ -26,12 +67,28 @@ export class UserPostCommentService {
     return await this.prisma.userPostComment.update({
       where: { id },
       data: updateUserPostCommentDto,
+      include: {
+        post: true,
+        user: {
+          include: {
+            user_class_member: true,
+          },
+        },
+      },
     });
   }
 
   async remove(id: string) {
     return await this.prisma.userPostComment.delete({
       where: { id },
+      include: {
+        post: true,
+        user: {
+          include: {
+            user_class_member: true,
+          },
+        },
+      },
     });
   }
 }
