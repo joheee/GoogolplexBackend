@@ -11,6 +11,11 @@ export class UserClassMemberService {
       data: createUserClassMemberDto,
       include: {
         user: true,
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
       },
     });
   }
@@ -19,6 +24,11 @@ export class UserClassMemberService {
     return await this.prisma.userClassMember.findMany({
       include: {
         user: true,
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
       },
       orderBy: [
         {
@@ -64,6 +74,11 @@ export class UserClassMemberService {
       },
       include: {
         user: true,
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
       },
       orderBy: [
         {
@@ -86,6 +101,11 @@ export class UserClassMemberService {
       },
       include: {
         user: true,
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
       },
       orderBy: [
         {
@@ -106,6 +126,11 @@ export class UserClassMemberService {
       data: updateUserClassMemberDto,
       include: {
         user: true,
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
       },
     });
   }
@@ -115,6 +140,11 @@ export class UserClassMemberService {
       where: { id },
       include: {
         user: true,
+        class: {
+          include: {
+            user_class_member: true,
+          },
+        },
       },
     });
   }
