@@ -108,7 +108,7 @@ export class UserTodoAnswerController {
     );
   }
 
-  @Get('user_assignment_todo,:user_assignment_todo_id')
+  @Get('user_assignment_todo/:user_assignment_todo_id')
   @ApiOperation({ summary: `find ${TABLE_NAME} by user_assignment_todo_id` })
   @ApiParam({
     name: 'user_assignment_todo_id',
