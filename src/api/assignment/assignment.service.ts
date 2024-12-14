@@ -10,6 +10,19 @@ export class AssignmentService {
   async create(createAssignmentDto: CreateAssignmentDto) {
     return await this.prisma.assignment.create({
       data: createAssignmentDto,
+      include: {
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+        post: {
+          include: {
+            class: true,
+          },
+        },
+        assignment_file: true,
+      },
     });
   }
 
@@ -21,7 +34,11 @@ export class AssignmentService {
             user: true,
           },
         },
-        post: true,
+        post: {
+          include: {
+            class: true,
+          },
+        },
         assignment_file: true,
       },
     });
@@ -40,7 +57,11 @@ export class AssignmentService {
             user: true,
           },
         },
-        post: true,
+        post: {
+          include: {
+            class: true,
+          },
+        },
         assignment_file: true,
       },
     });
@@ -55,7 +76,11 @@ export class AssignmentService {
             user: true,
           },
         },
-        post: true,
+        post: {
+          include: {
+            class: true,
+          },
+        },
         assignment_file: true,
       },
     });
@@ -65,12 +90,38 @@ export class AssignmentService {
     return await this.prisma.assignment.update({
       where: { id },
       data: updateAssignmentDto,
+      include: {
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+        post: {
+          include: {
+            class: true,
+          },
+        },
+        assignment_file: true,
+      },
     });
   }
 
   async remove(id: string) {
     return await this.prisma.assignment.delete({
       where: { id },
+      include: {
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+        post: {
+          include: {
+            class: true,
+          },
+        },
+        assignment_file: true,
+      },
     });
   }
 }
