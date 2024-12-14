@@ -108,6 +108,33 @@ export class UserTodoAnswerController {
     );
   }
 
+  @Get('user_assignment_todo,:user_assignment_todo_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by user_assignment_todo_id` })
+  @ApiParam({
+    name: 'user_assignment_todo_id',
+    description: `user_assignment_todo_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByUserAssignmentTodo(
+    @Param('user_assignment_todo_id') user_assignment_todo_id: string,
+  ) {
+    const findUserTodoAnswer =
+      await this.userTodoAnswerService.findByUserAssignmentTodo(
+        user_assignment_todo_id,
+      );
+    if (!findUserTodoAnswer) {
+      throw new NotFoundException(
+        `${TABLE_NAME} with user_assignment_todo_id ${user_assignment_todo_id} is not found!`,
+      );
+    }
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with id ${findUserTodoAnswer.id}!`,
+      findUserTodoAnswer,
+    );
+  }
+
   @Patch(':id')
   @ApiOperation({ summary: `update ${TABLE_NAME} by id` })
   @ApiParam({
