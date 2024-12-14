@@ -16,7 +16,15 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
-        assignment: true,
+        assignment: {
+          include: {
+            post: {
+              include: {
+                class: true,
+              },
+            },
+          },
+        },
         user: {
           include: {
             user_class_member: true,
@@ -34,7 +42,15 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
-        assignment: true,
+        assignment: {
+          include: {
+            post: {
+              include: {
+                class: true,
+              },
+            },
+          },
+        },
         user: {
           include: {
             user_class_member: true,
@@ -55,7 +71,15 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
-        assignment: true,
+        assignment: {
+          include: {
+            post: {
+              include: {
+                class: true,
+              },
+            },
+          },
+        },
         user: {
           include: {
             user_class_member: true,
@@ -80,7 +104,15 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
-        assignment: true,
+        assignment: {
+          include: {
+            post: {
+              include: {
+                class: true,
+              },
+            },
+          },
+        },
         user: {
           include: {
             user_class_member: true,
@@ -99,7 +131,15 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
-        assignment: true,
+        assignment: {
+          include: {
+            post: {
+              include: {
+                class: true,
+              },
+            },
+          },
+        },
         user: {
           include: {
             user_class_member: true,
@@ -122,7 +162,15 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
-        assignment: true,
+        assignment: {
+          include: {
+            post: {
+              include: {
+                class: true,
+              },
+            },
+          },
+        },
         user: {
           include: {
             user_class_member: true,
@@ -141,7 +189,15 @@ export class UserAssignmentTodoService {
             answer_file: true,
           },
         },
-        assignment: true,
+        assignment: {
+          include: {
+            post: {
+              include: {
+                class: true,
+              },
+            },
+          },
+        },
         user: {
           include: {
             user_class_member: true,
