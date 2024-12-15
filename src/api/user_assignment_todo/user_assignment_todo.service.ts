@@ -87,6 +87,7 @@ export class UserAssignmentTodoService {
         },
       },
       orderBy: {
+        is_finish: 'asc',
         assignment: {
           due_date: 'asc',
         },
