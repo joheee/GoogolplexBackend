@@ -184,6 +184,12 @@ export class UserAssignmentTodoController {
     @Param('id') id: string,
     @Body() updateUserAssignmentTodoDto: UpdateUserAssignmentTodoDto,
   ) {
+    const findUserAssignmentTodo =
+      await this.userAssignmentTodoService.findOne(id);
+    if (!findUserAssignmentTodo) {
+      throw new NotFoundException(`${TABLE_NAME} with id ${id} is not found!`);
+    }
+
     // USER VALIDATION
     if (updateUserAssignmentTodoDto.user_id) {
       const findUser = await this.authService.findById(
@@ -207,6 +213,7 @@ export class UserAssignmentTodoController {
         );
       }
     }
+
     const updateUserAssignmentTodo =
       await this.userAssignmentTodoService.update(
         id,
