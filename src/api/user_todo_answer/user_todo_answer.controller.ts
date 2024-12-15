@@ -193,11 +193,7 @@ export class UserTodoAnswerController {
         assignment_id,
       );
     if (!findUserTodoAnswer) {
-      return new CustomResponse(
-        HttpStatus.OK,
-        `found ${TABLE_NAME} with id ${findUserTodoAnswer.id}!`,
-        null,
-      );
+      return new CustomResponse(HttpStatus.OK, `null object`, null);
     }
 
     return new CustomResponse(
