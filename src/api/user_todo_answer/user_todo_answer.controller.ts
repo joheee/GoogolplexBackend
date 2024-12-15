@@ -192,6 +192,11 @@ export class UserTodoAnswerController {
         user_id,
         assignment_id,
       );
+    if (!findUserTodoAnswer) {
+      throw new NotFoundException(
+        `${TABLE_NAME} with user_id ${user_id} and assignment_id ${assignment_id} is not found!`,
+      );
+    }
 
     return new CustomResponse(
       HttpStatus.OK,
