@@ -70,6 +70,24 @@ export class UserTodoAnswerService {
     });
   }
 
+  async findByAssignmentId(assignment_id: string) {
+    return await this.prisma.userTodoAnswer.findMany({
+      where: {
+        user_assignment_todo: {
+          assignment_id,
+        },
+      },
+      include: {
+        answer_file: true,
+        user_assignment_todo: {
+          include: {
+            user: true,
+          },
+        },
+      },
+    });
+  }
+
   async update(id: string, updateUserTodoAnswerDto: UpdateUserTodoAnswerDto) {
     return await this.prisma.userTodoAnswer.update({
       where: { id },

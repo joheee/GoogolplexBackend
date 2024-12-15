@@ -22,6 +22,7 @@ import {
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import { UserAssignmentTodoService } from '../user_assignment_todo/user_assignment_todo.service';
 import { CustomResponse } from 'src/tools/CustomResponse';
+import { AssignmentService } from '../assignment/assignment.service';
 
 const TABLE_NAME = 'user_todo_answer';
 
@@ -33,6 +34,7 @@ export class UserTodoAnswerController {
   constructor(
     private readonly userTodoAnswerService: UserTodoAnswerService,
     private readonly userAssignmentTodoService: UserAssignmentTodoService,
+    private readonly assignmentService: AssignmentService,
   ) {}
 
   @Post()
@@ -131,6 +133,32 @@ export class UserTodoAnswerController {
     return new CustomResponse(
       HttpStatus.OK,
       `found ${TABLE_NAME} with id ${findUserTodoAnswer.id}!`,
+      findUserTodoAnswer,
+    );
+  }
+
+  @Get('assignment/:assignment_id')
+  @ApiOperation({ summary: `find ${TABLE_NAME} by assignment_id` })
+  @ApiParam({
+    name: 'assignment_id',
+    description: `assignment_id ${TABLE_NAME}`,
+    type: 'string',
+    example: 'dont be lazy :)',
+  })
+  async findByAssignmentId(@Param('assignment_id') assignment_id: string) {
+    const findAssignment = await this.assignmentService.findOne(assignment_id);
+    if (!findAssignment) {
+      throw new NotFoundException(
+        `${TABLE_NAME} with assignment_id ${assignment_id} is not found!`,
+      );
+    }
+
+    const findUserTodoAnswer =
+      await this.userTodoAnswerService.findByAssignmentId(assignment_id);
+
+    return new CustomResponse(
+      HttpStatus.OK,
+      `found ${TABLE_NAME} with length ${findUserTodoAnswer.length}!`,
       findUserTodoAnswer,
     );
   }
